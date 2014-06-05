@@ -38,6 +38,10 @@ python tornado_server.py
 
 * Site should be viewable at http://localhost:8001
 
+Heroku Installation
+-------------------
+* The easiest way to get this working is to download the repo and push it to a Heroku instance. Get a MongoDB database using either MongoLab or MongoHQ. Heroku will automatically put your DB credentials into Heroku config; if you want to do any development locally, just creating a local_settings.py file that sets the same variables using os.environ['var_name']. 
+
 
 Technology
 ===========
