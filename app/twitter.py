@@ -2,8 +2,6 @@ import tweepy
 import app.basic
 import settings
 
-from lib import userdb
-
 ####################
 ### AUTH VIA TWITTER
 ### /auth/twitter
@@ -44,14 +42,25 @@ class Twitter(app.basic.BaseHandler):
       'key': auth.access_token.key
     }
 
+    # Set cookie if user is allowed to log in
+    if screen_name in settings.get('usernames'):
+      self.set_secure_cookie("user_id_str", user.id_str)
+      self.set_secure_cookie("username", user.screen_name)
+      print "SET COOKIE"
+    self.redirect('/')
+
+
+
+    
+    ### DELETE 
+    '''
     # Check if user allowed or not 
     user = userdb.get_user_by_screen_name(screen_name)
     if user:
       # set the cookies based on account details
       self.set_secure_cookie("user_id_str", user['user']['id_str'])
       self.set_secure_cookie("username", user['user']['screen_name'])
-      if 'email_address' not in user or ('email_address' in user and user['email_address'] == ''):
-        bounce_to = '/user/%s/settings?1' % screen_name
+      bounce_to = '/user/%s/settings?1' % screen_name
     else:
       # need to create the account (so get more details from Twitter)
       auth = tweepy.OAuthHandler(consumer_key, consumer_secret, secure=True)
@@ -80,3 +89,4 @@ class Twitter(app.basic.BaseHandler):
 
     # bounce to account
     self.redirect(bounce_to)
+    '''

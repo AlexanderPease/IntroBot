@@ -1,10 +1,11 @@
 {% extends base.html %}
+{% import settings %}
 
 {% block title %}IntroBot | {% end %}
 
 {% block content %}	
 <div class="header">
-		<h3 class="text-muted">BrittBot Intro Machine<h3>
+		<h3 class="text-muted">IntroBot<h3>
 	</div>	
 	{% if err %}
 		<p class="text-danger">
@@ -72,6 +73,7 @@
   	<!-- Script for dynamically displaying preview of email --> 
   	<script>
 		$("input, textarea").keyup(function () {
+			console.log("keyup");
 			var to_name = $("#to_name").val();
 			var to_email = $("#to_email").val();
 			var for_name = $("#for_name").val();
@@ -80,11 +82,9 @@
 				"Hi " + to_name + 
 				", </br>" + for_name +
 				" wants to meet with you to " + purpose +
-				"</br></br> If you're open to the connection please <a href=>click here</a>. This will automatically generate an email from brittany@usv.com to connect the two of you. </br></br> Thanks! Brittany";
+				"</br></br> If you're open to the connection please <a href=>click here</a>. This will automatically generate an email from to connect the two of you. </br></br> Thanks! Brittany";
 			$("#message").html(preview_ask);
 		 }).keyup();
-
-		//TODO: client side error handling for form inputs	
 	</script>
 {% end %}
 

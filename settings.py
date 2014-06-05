@@ -43,7 +43,7 @@ options = {
 
 default_options = {
   'active_theme': "default",
-  'site_title': "The Conversation",
+  'site_title': "IntroBot",
   'site_intro': "This is a website where people talk",
   'base_url': os.environ.get("BASE_URL"),
   
@@ -53,67 +53,19 @@ default_options = {
   'twitter_consumer_key' : '',
   'twitter_consumer_secret' : '',
 
-  # disqus details
-  'disqus_public_key': '',
-  'disqus_secret_key': '',
-  'disqus_short_code': '',
-
   # sendgrid details
   'sendgrid_user': os.environ.get("SENDGRID_USER"),
   'sendgrid_secret': os.environ.get("SENDGRID_SECRET"),
 
-  # hackpad details
-  'hackpad_oauth_client_id': os.environ.get("HACKPAD_OAUTH_CLIENT_ID"), 
-  'hackpad_oauth_secret': os.environ.get("HACKPAD_OAUTH_SECRET"), 
-  'hackpad_domain': os.environ.get("HACKPAD_DOMAIN"),
+  # Your name and email, used in the IntroBot message
+  'name': 'John Test',
+  'email': 'john@test.com',
 
-  # google api key
-  'google_api_key': os.environ.get("GOOGLE_API_KEY"),
-
-  # bitly access token
-  'bitly_access_token': os.environ.get("BITLY_ACCESS_TOKEN"),
-
-  # other control variables
-  'tinymce_valid_elements': '',
-  'post_char_limit': 1000,
-  'sticky': None,
-  'read_only' : False,
-  'max_simultaneous_connections' : 10,
-  'hot_post_set_count': 200,
-
-
-### DELETE STAFF[]
-  'staff':[
+  # Twitter handles that can log in and use your IntroBot 
+  'usernames':[
     "AlexanderPease",
-    "bwats",
-    "aweissman",
-    "fredwilson",
-    "albertwenger",
-    "bradusv",
-    "nickgrossman",
-    "br_ttany",
-    "johnbuttrick",
-    "oliverfriedmann"
   ],
 
-  # define the various roles and what capabilities they support
-  'staff_capabilities': [
-    'connect_to_yammer',
-    'send_daily_email',
-    'see_admin_link',
-    'delete_users',
-    'delete_posts',
-    'post_rich_media',
-    'feature_posts',
-    'edit_posts',
-    'super_upvote',
-    'super_downvote',
-    'downvote_posts',
-    'manage_disqus',
-    'view_post_sort_score',
-    'view_applications'
-  ],
-  'user_capabilities': [], 
   
   'module_dir': os.path.join(PROJECT_ROOT, 'templates/modules')
 }

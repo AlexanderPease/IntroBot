@@ -24,3 +24,4 @@ def remove_intro(intro):
 	if 'id' in intro.keys():
 		return db.brittbot.remove({'id':intro['id']})
 
+

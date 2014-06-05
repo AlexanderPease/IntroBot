@@ -48,22 +48,23 @@ class Index(app.basic.BaseHandler):
 
 		# Send initial email
 		try:
+			name = settings.get('name')
+			email = settings.get('email')
 			subject = "Intro to %s?" % intro['for_name']
-			response_url = "http://usv.com/admin/brittbot/response"
-			text_body = 'Hi %s, %s wants to meet with you to %s If you are open to the connection please email reply to brittany@usv.com. This will automatically generate an email from brittany@usv.com to connect the two of you. Thanks! Brittany' % (intro['to_name'], intro['for_name'], intro['purpose'])
-			html_body = 'Hi %s,<br><br> %s wants to meet with you to %s <br><br>If you are open to the connection please <a href="%s?id=%s">click here</a>. This will automatically generate an email from brittany@usv.com to connect the two of you. <br><br> Thanks! Brittany' % (intro['to_name'], intro['for_name'], intro['purpose'], response_url, intro['id'])
-			response = self.send_email('brittany@usv.com', intro['to_email'], subject, text_body, html_body, from_name="Brittany Laughlin")
-			print response
-			self.redirect('brittbot?sent=%s (%s)' % (intro['to_name'], intro['to_email'])) # Always redirect after successful POST
+			response_url = "%s/response" % settings.get('base_url')
+			#text_body = 'Hi %s, %s wants to meet with you to %s If you are open to the connection please email reply to brittany@usv.com. This will automatically generate an email from brittany@usv.com to connect the two of you. Thanks! Brittany' % (intro['to_name'], intro['for_name'], intro['purpose'])
+			html_body = 'Hi %s,<br><br> %s wants to meet with you to %s <br><br>If you are open to the connection please <a href="%s?id=%s">click here</a>. This will automatically generate an email from %s to connect the two of you. <br><br> Thanks! %s' % (intro['to_name'], intro['for_name'], intro['purpose'], response_url, intro['id'], email, name)
+			response = self.send_email(name, intro['to_email'], subject, text_body, html_body, from_name=name)
+			self.redirect('?sent=%s (%s)' % (intro['to_name'], intro['to_email'])) # Always redirect after successful POST
 		except:
 			introdb.remove_intro(intro)
-			self.redirect('brittbot?err=%s' % 'Email failed to send.')
+			self.redirect('?err=%s' % 'Email failed to send.')
 
 
 ###########################
 ### Creates the actual intro email
 ### once the initial user has acquiesced
-### /admin/brittbot/response
+### /response
 ###########################
 class Response(app.basic.BaseHandler):		
 	def get(self):
@@ -79,7 +80,7 @@ class Response(app.basic.BaseHandler):
 		subject = "%s <-> %s" % (intro['for_name'], intro['to_name'])
 		body = 'Great that you guys are connecting!<br><br>(For context, %s wants to meet with %s to %s)<br><br>Thanks - Brittbot' % (intro['for_name'], intro['to_name'], intro['purpose'])
 		try:
-			response = self.send_email('brittany@usv.com', [intro['to_email'], intro['for_email']], subject, body, html=body, from_name="Brittany Laughlin")
+			response = self.send_email(settings.get('name') [intro['to_email'], intro['for_email']], subject, body, html=body, from_name="Brittany Laughlin")
 			print response
 			print 'Connection email sent to %s and %s' % (intro['to_email'], intro['for_email'])
 		except: 
