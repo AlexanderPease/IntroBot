@@ -88,7 +88,7 @@ class Response(app.basic.BaseHandler):
 			print response
 			print 'Connection email sent to %s and %s' % (intro['to_email'], intro['for_email'])
 		except: 
-			self.render('response.html', intro=None, err="Sorry, there was a problem with our email server. Please try again or contact brittany@usv.com")
+			self.render('response.html', intro=None, err="Sorry, there was a problem with our email server. Please try again or contact %s" % settings.get(email))
 		
 		intro['connected'] = datetime.datetime.now()
 		introdb.save_intro(intro)
