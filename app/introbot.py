@@ -12,6 +12,7 @@ import requests
 class Index(app.basic.BaseHandler):
 	#@tornado.web.authenticated
 	def get(self):
+		#print self.current_user
 		sent = self.get_argument('sent', '')
 		err = self.get_argument('err', '')
 
@@ -26,7 +27,7 @@ class Index(app.basic.BaseHandler):
 		self.render('index.html', form=form, err=err, sent=sent)
 
 	# If form is submitted correctly, send initial email
-	@tornado.web.authenticated
+	#@tornado.web.authenticated
 	def post(self):
 		# Get submitted form data
 		to_name = self.get_argument('to_name', '')
@@ -43,8 +44,7 @@ class Index(app.basic.BaseHandler):
 			intro['sent_initial'] = datetime.datetime.now()
 			introdb.save_intro(intro)
 		except:
-			pass # multiple redirects in function apparently a problem
-			#self.redirect('brittbot?err=%s' % 'Failed to save file to database. Email was not sent.')
+			return self.redirect('brittbot?err=%s' % 'Failed to save file to database. Email was not sent.')
 
 		# Send initial email
 		try:
@@ -52,13 +52,17 @@ class Index(app.basic.BaseHandler):
 			email = settings.get('email')
 			subject = "Intro to %s?" % intro['for_name']
 			response_url = "%s/response" % settings.get('base_url')
-			#text_body = 'Hi %s, %s wants to meet with you to %s If you are open to the connection please email reply to brittany@usv.com. This will automatically generate an email from brittany@usv.com to connect the two of you. Thanks! Brittany' % (intro['to_name'], intro['for_name'], intro['purpose'])
+			if "http://" not in response_url:
+				response_url = "http://" + response_url
+			text_body = 'Hi %s, %s wants to meet with you to %s If you are open to the connection please email reply to brittany@usv.com. This will automatically generate an email from brittany@usv.com to connect the two of you. Thanks! Brittany' % (intro['to_name'], intro['for_name'], intro['purpose'])
 			html_body = 'Hi %s,<br><br> %s wants to meet with you to %s <br><br>If you are open to the connection please <a href="%s?id=%s">click here</a>. This will automatically generate an email from %s to connect the two of you. <br><br> Thanks! %s' % (intro['to_name'], intro['for_name'], intro['purpose'], response_url, intro['id'], email, name)
 			response = self.send_email(name, intro['to_email'], subject, text_body, html_body, from_name=name)
-			self.redirect('?sent=%s (%s)' % (intro['to_name'], intro['to_email'])) # Always redirect after successful POST
+			if response.status_code != 200:
+				raise Exception 
+			return self.redirect('?sent=%s (%s)' % (intro['to_name'], intro['to_email'])) # Always redirect after successful POST
 		except:
 			introdb.remove_intro(intro)
-			self.redirect('?err=%s' % 'Email failed to send.')
+			return self.redirect('?err=%s' % 'Email failed to send.')
 
 
 ###########################

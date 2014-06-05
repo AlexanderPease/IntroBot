@@ -35,15 +35,10 @@ class Twitter(app.basic.BaseHandler):
     screen_name = auth.get_username()
     bounce_to = self.get_secure_cookie('twitter_auth_redirect') or '/'
 
-    access_token = {
-      'secret': auth.access_token.secret,
-      'user_id': '',
-      'screen_name': '',
-      'key': auth.access_token.key
-    }
-
     # Set cookie if user is allowed to log in
     if screen_name in settings.get('usernames'):
+      api = tweepy.API(auth)
+      user = api.get_user(screen_name)
       self.set_secure_cookie("user_id_str", user.id_str)
       self.set_secure_cookie("username", user.screen_name)
       print "SET COOKIE"

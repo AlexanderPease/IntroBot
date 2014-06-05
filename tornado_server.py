@@ -17,11 +17,13 @@ import app.introbot
 
 class Application(tornado.web.Application):
   def __init__(self):
+    debug = (settings.get('environment') == "dev")
     app_settings = {
       "cookie_secret" : "change_me",
       "login_url": "/auth/twitter",
       "static_path" : os.path.join(os.path.dirname(os.path.abspath(__file__)), "static"),
       "template_path" : os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates"),
+      "debug": debug,
     }
 
     handlers = [
