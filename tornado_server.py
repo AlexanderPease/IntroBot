@@ -19,7 +19,7 @@ class Application(tornado.web.Application):
   def __init__(self):
     debug = (settings.get('environment') == "dev")
     app_settings = {
-      "cookie_secret" : "change_me",
+      "cookie_secret" : "weiryqo34756o34875cno34875c",
       "login_url": "/auth/twitter",
       "static_path" : os.path.join(os.path.dirname(os.path.abspath(__file__)), "static"),
       "template_path" : os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates"),
@@ -33,6 +33,7 @@ class Application(tornado.web.Application):
 
       (r'/$', app.introbot.Index),
       (r"/response", app.introbot.Response),
+      (r'/db', app.introbot.DB),
     ]
 
     tornado.web.Application.__init__(self, handlers, **app_settings)

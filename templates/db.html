@@ -1,0 +1,20 @@
+{% block body %}
+  <table class="table table-striped">
+    <tr>
+      <th>To</th>
+      <th>From</th>
+      <th>Initial Email Sent</th>
+      <th>Connection Email Sent</th>
+      <th>Id</th>
+    </tr>
+    {% for i in intros %}
+      <tr>
+        <td>{{ i['to_name'] }} {{ i['to_email'] }} </td>
+        <td>{{ i['for_name'] }} {{ i['for_email'] }} </td>
+        <td>{{ i['sent_initial'] }}</td>
+        <td>{{ i['connected'] }}</td>
+        <td>{{ id['id'] }}</td>
+      </tr>
+    {% end %}
+  </table>
+{% end %}

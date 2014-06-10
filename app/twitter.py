@@ -1,6 +1,7 @@
 import tweepy
 import app.basic
 import settings
+import logging
 
 ####################
 ### AUTH VIA TWITTER
@@ -39,11 +40,10 @@ class Twitter(app.basic.BaseHandler):
     if screen_name in settings.get('usernames'):
       api = tweepy.API(auth)
       user = api.get_user(screen_name)
-      self.set_secure_cookie("user_id_str", user.id_str)
+      self.set_secure_cookie("user_id_str", user.id_str) # Pretty sure this is erroneous
       self.set_secure_cookie("username", user.screen_name)
-      print "SET COOKIE"
+      logging.info("set cookie successfully")
     self.redirect('/')
-
 
 
     

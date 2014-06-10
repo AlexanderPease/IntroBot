@@ -15,6 +15,10 @@ class BaseHandler(tornado.web.RequestHandler):
     kwargs['current_path'] = self.request.uri 
     super(BaseHandler, self).render(template, **kwargs)
 
+  # Reads current user based on cookies set in twitter.py
+  def get_current_user(self):
+    return self.get_secure_cookie("username")
+
   ''' Optional HTML body supercedes plain text body in SendGrid API'''
   def send_email(self, from_user, to_user, subject, text, html=None, from_name=None):
     #if settings.get('environment') != "prod":

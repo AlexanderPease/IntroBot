@@ -4,6 +4,7 @@ import settings
 import datetime
 from lib import introdb
 import requests
+import logging
 
 ###########################
 ### Creates the initial intro email
@@ -12,7 +13,7 @@ import requests
 class Index(app.basic.BaseHandler):
 	#@tornado.web.authenticated
 	def get(self):
-		#print self.current_user
+		logging.info(self.current_user)
 		sent = self.get_argument('sent', '')
 		err = self.get_argument('err', '')
 
@@ -27,7 +28,7 @@ class Index(app.basic.BaseHandler):
 		self.render('index.html', form=form, err=err, sent=sent)
 
 	# If form is submitted correctly, send initial email
-	#@tornado.web.authenticated
+	@tornado.web.authenticated
 	def post(self):
 		# Get submitted form data
 		to_name = self.get_argument('to_name', '')
@@ -44,7 +45,7 @@ class Index(app.basic.BaseHandler):
 			intro['sent_initial'] = datetime.datetime.now()
 			introdb.save_intro(intro)
 		except:
-			return self.redirect('brittbot?err=%s' % 'Failed to save file to database. Email was not sent.')
+			return self.redirect('introbot?err=%s' % 'Failed to save file to database. Email was not sent.')
 
 		# Send initial email
 		try:
@@ -94,3 +95,13 @@ class Response(app.basic.BaseHandler):
 		introdb.save_intro(intro)
 		return self.render('response.html', intro=intro, err=None)
 
+###########################
+### Creates the actual intro email
+### once the initial user has acquiesced
+### /db
+###########################
+class DB(app.basic.BaseHandler):		
+	def get(self):
+		# Get all intros from database
+		intros = introdb.get_all()
+		return self.render('db.html', intros=intros)
