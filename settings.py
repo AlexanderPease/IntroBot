@@ -63,7 +63,7 @@ default_options = {
 
   # Twitter handles that can log in and use your IntroBot 
   'usernames':[
-    "AlexanderPease",
+    os.environ.get("USERNAME"),
   ],
 
   

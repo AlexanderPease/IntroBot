@@ -9,7 +9,7 @@ Setup
 
 Prior to installation, you'll need to do a few things:
 
-* _Twitter_: Log into http://dev.twitter.com and set up a new application.  Note the "consumer key" and "consumer secret", which we'll need later on.
+* Twitter: Log into http://dev.twitter.com and set up a new application.  Note the "consumer key" and "consumer secret", which we'll need later on.
 * Sign up for an account at http://sendgrid.com for email delivery
 
 
@@ -22,6 +22,8 @@ General app settings are controlled via the settings.py file. You will need to p
 * 'twitter_consumer_secret' : '',
 * 'sendgrid_user': '',
 * 'sendgrid_secret': '',
+
+You'll also have to add which Twitter handles are acceptable logins to use your IntroBot. This is currently a list in settings.py called "usernames". Set a "username" and feel free to add calls to more environmental variables in the list if you need multiple users to have access. "Username" is your Twitter handle. 
 * 
 
 Installation
