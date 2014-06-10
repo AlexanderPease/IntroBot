@@ -1,7 +1,7 @@
 IntroBot
 =================
 
-Simple web app for automating two-way email introductions
+Simple web app for automating two-way email introductions. It's not a cold intro! Create a personalized message to Person 1 asking if they would like to meet Person 2. In that message is a link. If Person 1 clicks on the link, it will automatically send the actual intro email between Person 1 and Person 2 (so you don't have to worry about it). The app also includes a database for keeping track of when people open the emails and make the intros. So you can always follow up later if someone says no to the intro. 
 
 
 Setup
