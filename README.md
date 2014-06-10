@@ -22,6 +22,7 @@ General app settings are controlled via the settings.py file. You will need to p
 * 'twitter_consumer_secret' : '',
 * 'sendgrid_user': '',
 * 'sendgrid_secret': '',
+* 
 
 Installation
 ------------
