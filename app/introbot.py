@@ -11,7 +11,7 @@ import logging
 ### /
 ###########################
 class Index(app.basic.BaseHandler):
-	#@tornado.web.authenticated
+	@tornado.web.authenticated
 	def get(self):
 		logging.info(self.current_user)
 		sent = self.get_argument('sent', '')
